@@ -1,43 +1,41 @@
 
-CREATE TABLE doctors (
+CREATE TABLE ingredients (
 	id INTEGER NOT NULL, 
 	name VARCHAR NOT NULL, 
-	specialty VARCHAR NOT NULL, 
 	PRIMARY KEY (id)
 )
 
 ;
 
 
-CREATE TABLE rooms (
+CREATE TABLE recipes (
 	id INTEGER NOT NULL, 
-	room_number VARCHAR NOT NULL, 
+	name VARCHAR NOT NULL, 
 	PRIMARY KEY (id)
 )
 
 ;
 
 
-CREATE TABLE patients (
+CREATE TABLE units (
 	id INTEGER NOT NULL, 
 	name VARCHAR NOT NULL, 
-	age INTEGER NOT NULL, 
-	room_id INTEGER, 
-	PRIMARY KEY (id), 
-	FOREIGN KEY(room_id) REFERENCES rooms (id)
+	PRIMARY KEY (id)
 )
 
 ;
 
 
-CREATE TABLE appointments (
+CREATE TABLE recipe_ingredients (
 	id INTEGER NOT NULL, 
-	patient_id INTEGER, 
-	doctor_id INTEGER, 
-	appointment_time DATETIME NOT NULL, 
+	recipe_id INTEGER NOT NULL, 
+	ingredient_id INTEGER NOT NULL, 
+	unit_id INTEGER NOT NULL, 
+	quantity FLOAT NOT NULL, 
 	PRIMARY KEY (id), 
-	FOREIGN KEY(patient_id) REFERENCES patients (id), 
-	FOREIGN KEY(doctor_id) REFERENCES doctors (id)
+	FOREIGN KEY(recipe_id) REFERENCES recipes (id), 
+	FOREIGN KEY(ingredient_id) REFERENCES ingredients (id), 
+	FOREIGN KEY(unit_id) REFERENCES units (id)
 )
 
 ;
