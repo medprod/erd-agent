@@ -1,41 +1,63 @@
 
-CREATE TABLE ingredients (
+CREATE TABLE products (
 	id INTEGER NOT NULL, 
 	name VARCHAR NOT NULL, 
+	description TEXT, 
+	price FLOAT NOT NULL, 
+	stock INTEGER NOT NULL, 
 	PRIMARY KEY (id)
 )
 
 ;
 
 
-CREATE TABLE recipes (
+CREATE TABLE users (
 	id INTEGER NOT NULL, 
-	name VARCHAR NOT NULL, 
-	PRIMARY KEY (id)
-)
-
-;
-
-
-CREATE TABLE units (
-	id INTEGER NOT NULL, 
-	name VARCHAR NOT NULL, 
-	PRIMARY KEY (id)
-)
-
-;
-
-
-CREATE TABLE recipe_ingredients (
-	id INTEGER NOT NULL, 
-	recipe_id INTEGER NOT NULL, 
-	ingredient_id INTEGER NOT NULL, 
-	unit_id INTEGER NOT NULL, 
-	quantity FLOAT NOT NULL, 
+	username VARCHAR NOT NULL, 
+	email VARCHAR NOT NULL, 
+	password VARCHAR NOT NULL, 
 	PRIMARY KEY (id), 
-	FOREIGN KEY(recipe_id) REFERENCES recipes (id), 
-	FOREIGN KEY(ingredient_id) REFERENCES ingredients (id), 
-	FOREIGN KEY(unit_id) REFERENCES units (id)
+	UNIQUE (username), 
+	UNIQUE (email)
+)
+
+;
+
+
+CREATE TABLE orders (
+	id INTEGER NOT NULL, 
+	user_id INTEGER NOT NULL, 
+	created_at DATETIME NOT NULL, 
+	PRIMARY KEY (id), 
+	FOREIGN KEY(user_id) REFERENCES users (id)
+)
+
+;
+
+
+CREATE TABLE reviews (
+	id INTEGER NOT NULL, 
+	user_id INTEGER NOT NULL, 
+	product_id INTEGER NOT NULL, 
+	rating INTEGER NOT NULL, 
+	comment TEXT, 
+	created_at DATETIME NOT NULL, 
+	PRIMARY KEY (id), 
+	FOREIGN KEY(user_id) REFERENCES users (id), 
+	FOREIGN KEY(product_id) REFERENCES products (id)
+)
+
+;
+
+
+CREATE TABLE order_items (
+	id INTEGER NOT NULL, 
+	order_id INTEGER NOT NULL, 
+	product_id INTEGER NOT NULL, 
+	quantity INTEGER NOT NULL, 
+	PRIMARY KEY (id), 
+	FOREIGN KEY(order_id) REFERENCES orders (id), 
+	FOREIGN KEY(product_id) REFERENCES products (id)
 )
 
 ;
